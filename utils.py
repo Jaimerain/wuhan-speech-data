@@ -1,5 +1,6 @@
 import librosa
 import os
+import numpy as np 
 
 def extract_metadata(directory):
     """extract metadata from the data filenames
@@ -42,7 +43,7 @@ def get_data_labels(iteminfo, filenames, keyword):
      eg. get_data_labels(iteminfo, filenames, 'gender') will
      return a list of 'm' or 'f' for each file"""
     
-    return [iteminfo[filename][keyword] for filename in filenames]
+    return np.array([iteminfo[filename][keyword] for filename in filenames])
 
 
 def get_data_for(iteminfo, keyword, value):
@@ -57,4 +58,4 @@ def get_data_for(iteminfo, keyword, value):
             kwvalue = iteminfo[filename][keyword]
             if kwvalue == value or kwvalue in value:
                 result.append(filename)
-    return result
+    return np.array(result)
