@@ -32,4 +32,29 @@ def extract_metadata(directory):
 
     speakers = set([iteminfo[i]['speaker'] for i in iteminfo])
     
-    return iteminfo, speakers
+    return iteminfo, list(speakers)
+
+
+def get_data_labels(iteminfo, filenames, keyword):
+    """Given the iteminfo dictionary and a list of filenames,
+     return a list of the matching property values for the
+     given keywords.  
+     eg. get_data_labels(iteminfo, filenames, 'gender') will
+     return a list of 'm' or 'f' for each file"""
+    
+    return [iteminfo[filename][keyword] for filename in filenames]
+
+
+def get_data_for(iteminfo, keyword, value):
+    """Given the iteminfo dictionary return a list of
+    files where keyword=value in the metadata, eg
+    get_data_for(iteminfo, 'gender', 'm') will
+    return all files for male speakers"""
+    
+    result = []
+    for filename in iteminfo:
+        if keyword in iteminfo[filename]:
+            kwvalue = iteminfo[filename][keyword]
+            if kwvalue == value or kwvalue in value:
+                result.append(filename)
+    return result
